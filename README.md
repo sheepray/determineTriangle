@@ -13,7 +13,7 @@ The conditions for three sides to form a triangle is that:
 
 (More about triangle in [Wikipedia](https://en.wikipedia.org/wiki/Triangle))
 
-Firstly I sort the input sides in an ascending order _( a <= b <= c )_. To determine whether these sides can form a triangle or not , the only thing I need to check is the sum of two smaller sides(a + b)  is bigger than the third one _( c )_. To avoid sum calculation overflow, the formulation came to be _( a > c - b )_.
+Firstly I sort the input sides in an ascending order _( a <= b <= c )_. To determine whether these sides can form a triangle or not , the only thing I need to check is the sum of two smaller sides _(a + b)_  is bigger than the third one _( c )_. To avoid sum calculation overflow, the formulation came to be _( a > c - b )_.
 
 # How to test the project
 You can clone this repo and import it as a project to Eclipse or Android Studio.
