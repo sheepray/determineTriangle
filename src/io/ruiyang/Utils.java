@@ -8,13 +8,14 @@ public class Utils{
 	// type of triangle with its side included in a set T(a, b, c)
 	public enum TriangleType{
 		EQUILATERAL,	// a == b == c
-		ISOSCELES,		// two of T are equal, the rest one is not.
+		ISOSCELES,		// two members of T are equal, the rest one is not.
 		SCALENE,		// a != b != c
-		INVALID			// not a triangle, (a + b) <= c or Math.abs(a - b) >= c
+		INVALID			// not a triangle, any (a + b) <= c or Math.abs(a - b) >= c
 	};
 	
 	/**
 	 * takes an array for the three side to determine what type of triangle they can form.
+	 * It is the developer's responsibility to make sure the precision of values passed in.
 	 * @param abc an array contains three sides.
 	 * @return the type of triangle can be formed.
 	 */
@@ -33,7 +34,7 @@ public class Utils{
 		Arrays.sort(abc); // sort array in ascending order.
 		
 		// the sum of two shortest sides should be bigger than the biggest side.
-		if(abc[0] + abc[1] <= abc[2] ){
+		if( abc[1] <= abc[2] - abc[0] ){
 			return TriangleType.INVALID;
 		}
 		
