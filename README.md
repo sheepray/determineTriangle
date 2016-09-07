@@ -25,8 +25,8 @@ You can clone this repo and import it as a project to Eclipse or Android Studio.
 ```
 or
 ```java
-	Utils.determineTriangle(new double[]{a, b, c});
+	Utils.determineTriangle(new BigDecimal[]{a, b, c});
 ```
 
 # TODO:
-More overload functions which accept other primitive type arrays.
+adding support for different building system.
