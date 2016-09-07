@@ -35,7 +35,7 @@ public class Utils{
 		// none of sides should be less or equal to 0
 		for(int i = 0; i < abc.length; i++){
 			if(abc[i].compareTo( BD_ZERO ) <= 0){
-				throw new InvalidValueException("Expecting positive value at " + (i+1) + " side.");
+				throw new InvalidValueException("Expecting positive value at no." + (i+1) + " side.");
 			}
 		}
 		
@@ -62,7 +62,8 @@ public class Utils{
 	 * @param b 2nd side.
 	 * @param c 3rd side.
 	 * @return the type of triangle can be formed.
-	 * @throws InvalidInputException 
+	 * @throws IncorrectNumberOfInputException
+	 * @throws InvalidValueException
 	 */
 	public static TriangleType determineTriangle(BigDecimal a, BigDecimal b, BigDecimal c) throws InvalidInputException{
 		return determineTriangle(new BigDecimal[]{a, b, c});
