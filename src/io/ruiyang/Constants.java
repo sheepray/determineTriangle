@@ -1,3 +1,7 @@
+/**
+ * @author rui yang
+ * Date: 07.09.2016
+ */
 package io.ruiyang;
 
 public class Constants {
