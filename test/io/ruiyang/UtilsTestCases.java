@@ -29,9 +29,9 @@ public class UtilsTestCases {
 	// incorrect number of sides as input test.
 	@Test
 	public void determineTriangle_incorrectNumberOfSidesAsInputTest(){
-		determineInputLength(new BigDecimal[]{}, 								 Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
-		determineInputLength(new BigDecimal[]{ BD_N_ONE }, 						 Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
-		determineInputLength(new BigDecimal[]{ BD_ONE, BD_ONE }, 				 Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
+		determineInputLength(new BigDecimal[]{}, Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
+		determineInputLength(new BigDecimal[]{ BD_N_ONE }, Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
+		determineInputLength(new BigDecimal[]{ BD_ONE, BD_ONE }, Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
 		determineInputLength(new BigDecimal[]{ BD_ONE, BD_ONE, BD_ONE, BD_ONE }, Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
 	}
 	
