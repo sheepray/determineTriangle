@@ -19,11 +19,10 @@ public class UtilsTest {
 	BigDecimal BD_FOUR = new BigDecimal("4");
 	BigDecimal BD_FIVE = new BigDecimal("5");
 
-	// invalid input test.
+
+	// incorrect number of sides as input test.
 	@Test
-	public void determineTriangle_invalidInput() {
-		
-		// incorrect number of sides as input test.
+	public void determineTriangle_incorrectNumberOfSidesAsInputTest(){
 		try {
 			Utils.determineTriangle(new BigDecimal[]{}); fail();
 		} catch (InvalidInputException e) {
@@ -47,8 +46,11 @@ public class UtilsTest {
 		} catch (InvalidInputException e) {
 			assertEquals(e.getMessage(), Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
 		}
-		
-		// one negative value test.
+	}
+
+	// one negative value test.
+	@Test
+	public void determineTriangle_oneNegativeValueTest(){
 		try {
 			Utils.determineTriangle(BD_N_ONE, BD_ONE, BD_ONE); fail();
 		} catch (InvalidInputException e) {
@@ -68,8 +70,11 @@ public class UtilsTest {
 		catch(InvalidInputException e){
 			assertEquals(e.getMessage(), ("Expecting positive value at 3 side."));
 		}
-		
-		// zero test.
+	}
+	
+	// zero test.
+	@Test
+	public void determineTriangle_zeroTest(){
 		try {
 			Utils.determineTriangle(BD_ZERO, BD_ONE, BD_ONE); fail();
 		} catch (InvalidInputException e) {
@@ -89,8 +94,10 @@ public class UtilsTest {
 		catch(InvalidInputException e){
 			assertEquals(e.getMessage(), ("Expecting positive value at 3 side."));
 		}
-		
-		// two negative values test.
+	}
+	// two negative values test.
+	@Test
+	public void determineTriangle_twoNegativeValuesTest(){
 		try {
 			Utils.determineTriangle(BD_N_ONE, BD_N_ONE, BD_ONE); fail();
 		} catch (InvalidInputException e) {
@@ -108,28 +115,31 @@ public class UtilsTest {
 		} catch (InvalidInputException e) {
 			assertEquals(e.getMessage(), ("Expecting positive value at 2 side."));
 		}
-
-		// three negative values test.
+	}
+	
+	// three negative values test.
+	@Test
+	public void determineTriangle_threeNegativeValuesTest(){
 		try {
 			Utils.determineTriangle(BD_N_ONE, BD_N_ONE, BD_N_ONE); fail();
 		} catch (InvalidInputException e) {
 			assertEquals(e.getMessage(), ("Expecting positive value at 1 side."));
 		}
-		
 	}
 	
-	// function correctness test.
+	// equilateral test
 	@Test
-	public void determineTriangle_correctnessNormalVar(){
-		
-		// equilateral test.
+	public void determineTriangle_equilateralTest(){
 		try {
 			assertEquals(Utils.determineTriangle(BD_ONE, BD_ONE, BD_ONE), Utils.TriangleType.EQUILATERAL);
 		} catch (InvalidInputException e) {
 			fail();
 		}
-		
-		// isosceles test.
+	}
+	
+	// isosceles test.
+	@Test
+	public void determineTriangle_isoscelesTest(){
 		try {
 			assertEquals(Utils.determineTriangle(BD_ONE, BD_TWO, BD_TWO), Utils.TriangleType.ISOSCELES);
 		} catch (InvalidInputException e) {
@@ -147,8 +157,12 @@ public class UtilsTest {
 		} catch (InvalidInputException e) {
 			fail();
 		}
-		
-		// scalene test.
+	}
+	
+
+	// scalene test.
+	@Test
+	public void determineTriangle_scaleneTest(){
 		try {
 			assertEquals(Utils.determineTriangle(BD_TWO, BD_THREE, BD_FOUR), Utils.TriangleType.SCALENE);
 		} catch (InvalidInputException e) {
@@ -179,8 +193,12 @@ public class UtilsTest {
 		} catch (InvalidInputException e) {
 			fail();
 		}
+	}
+	
 
-		// invalid triangle test.
+	// invalid triangle test.
+	@Test
+	public void determineTriangle_invalidTriangleTest(){
 		try {
 			assertEquals(Utils.determineTriangle(BD_ONE, BD_THREE, BD_FIVE), Utils.TriangleType.INVALID);
 		} catch (InvalidInputException e) {
@@ -212,4 +230,5 @@ public class UtilsTest {
 			fail();
 		}
 	}
+	
 }
