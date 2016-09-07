@@ -2,60 +2,214 @@ package io.ruiyang;
 
 import static org.junit.Assert.*;
 
+import io.ruiyang.exception.InvalidInputException;
+
+import java.math.BigDecimal;
+
 import org.junit.Test;
 
 public class UtilsTest {
+	// initialize some constant BD values.
+	BigDecimal BD_N_ONE = new BigDecimal("-1");
+	BigDecimal BD_ZERO = new BigDecimal("0");
+	BigDecimal BD_ONE = new BigDecimal("1");
+	BigDecimal BD_TWO = new BigDecimal("2");
+	BigDecimal BD_THREE = new BigDecimal("3");
+	
+	BigDecimal BD_FOUR = new BigDecimal("4");
+	BigDecimal BD_FIVE = new BigDecimal("5");
 
 	// invalid input test.
 	@Test
 	public void determineTriangle_invalidInput() {
+		
+		// incorrect number of sides as input test.
+		try {
+			Utils.determineTriangle(new BigDecimal[]{}); fail();
+		} catch (InvalidInputException e) {
+			assertEquals(e.getMessage(), Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
+		}
+		
+		try{
+			Utils.determineTriangle(new BigDecimal[]{ BD_N_ONE }); fail();
+		} catch (InvalidInputException e) {
+			assertEquals(e.getMessage(), Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
+		}
+		
+		try{
+			Utils.determineTriangle(new BigDecimal[]{ BD_ONE, BD_ONE }); fail();
+		} catch (InvalidInputException e) {
+			assertEquals(e.getMessage(), Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
+		}
+		
+		try{
+			Utils.determineTriangle(new BigDecimal[]{ BD_ONE, BD_ONE, BD_ONE, BD_ONE }); fail();
+		} catch (InvalidInputException e) {
+			assertEquals(e.getMessage(), Constants.INCORRECT_NUMBER_OF_INPUT_EXE_MSG);
+		}
+		
 		// one negative value test.
-		assertEquals(Utils.determineTriangle(-1, 1, 1), Utils.TriangleType.INVALID);
-		assertEquals(Utils.determineTriangle(1, -1, 1), Utils.TriangleType.INVALID);
-		assertEquals(Utils.determineTriangle(1, 1, -1), Utils.TriangleType.INVALID);
+		try {
+			Utils.determineTriangle(BD_N_ONE, BD_ONE, BD_ONE); fail();
+		} catch (InvalidInputException e) {
+			assertEquals(e.getMessage(), ("Expecting positive value at 1 side."));
+		}
+		
+		try{
+			Utils.determineTriangle(BD_ONE, BD_N_ONE, BD_ONE); fail();
+		}
+		catch(InvalidInputException e){
+			assertEquals(e.getMessage(), ("Expecting positive value at 2 side."));
+		}
+		
+		try{
+			Utils.determineTriangle(BD_ONE, BD_ONE, BD_N_ONE); fail();
+		}
+		catch(InvalidInputException e){
+			assertEquals(e.getMessage(), ("Expecting positive value at 3 side."));
+		}
+		
+		// zero test.
+		try {
+			Utils.determineTriangle(BD_ZERO, BD_ONE, BD_ONE); fail();
+		} catch (InvalidInputException e) {
+			assertEquals(e.getMessage(), ("Expecting positive value at 1 side."));
+		}
+		
+		try{
+			Utils.determineTriangle(BD_ONE, BD_ZERO, BD_ONE); fail();
+		}
+		catch(InvalidInputException e){
+			assertEquals(e.getMessage(), ("Expecting positive value at 2 side."));
+		}
+		
+		try{
+			Utils.determineTriangle(BD_ONE, BD_ONE, BD_ZERO); fail();
+		}
+		catch(InvalidInputException e){
+			assertEquals(e.getMessage(), ("Expecting positive value at 3 side."));
+		}
 		
 		// two negative values test.
-		assertEquals(Utils.determineTriangle(-1, -1, 1), Utils.TriangleType.INVALID);
-		assertEquals(Utils.determineTriangle(-1, 1, -1), Utils.TriangleType.INVALID);
-		assertEquals(Utils.determineTriangle(1, -1, -1), Utils.TriangleType.INVALID);
+		try {
+			Utils.determineTriangle(BD_N_ONE, BD_N_ONE, BD_ONE); fail();
+		} catch (InvalidInputException e) {
+			assertEquals(e.getMessage(), ("Expecting positive value at 1 side."));
+		}
+		
+		try {
+			Utils.determineTriangle(BD_N_ONE, BD_ONE, BD_N_ONE); fail();
+		} catch (InvalidInputException e) {
+			assertEquals(e.getMessage(), ("Expecting positive value at 1 side."));
+		}
+		
+		try {
+			Utils.determineTriangle(BD_ONE, BD_N_ONE, BD_N_ONE); fail();
+		} catch (InvalidInputException e) {
+			assertEquals(e.getMessage(), ("Expecting positive value at 2 side."));
+		}
 
 		// three negative values test.
-		assertEquals(Utils.determineTriangle(-1, -1, -1), Utils.TriangleType.INVALID);
-
-		// zero test.
-		assertEquals(Utils.determineTriangle(0, 1, 1), Utils.TriangleType.INVALID);
-		assertEquals(Utils.determineTriangle(1, 0, 1), Utils.TriangleType.INVALID);
-		assertEquals(Utils.determineTriangle(1, 1, 0), Utils.TriangleType.INVALID);
+		try {
+			Utils.determineTriangle(BD_N_ONE, BD_N_ONE, BD_N_ONE); fail();
+		} catch (InvalidInputException e) {
+			assertEquals(e.getMessage(), ("Expecting positive value at 1 side."));
+		}
 		
-		// incorrect number of sides
-		assertEquals(Utils.determineTriangle(new double[]{4, 5, 6, 7}), Utils.TriangleType.INVALID);
 	}
 	
 	// function correctness test.
 	@Test
 	public void determineTriangle_correctnessNormalVar(){
+		
 		// equilateral test.
-		assertEquals(Utils.determineTriangle(1, 1, 1), Utils.TriangleType.EQUILATERAL);
+		try {
+			assertEquals(Utils.determineTriangle(BD_ONE, BD_ONE, BD_ONE), Utils.TriangleType.EQUILATERAL);
+		} catch (InvalidInputException e) {
+			fail();
+		}
 		
 		// isosceles test.
-		assertEquals(Utils.determineTriangle(1, 2, 2), Utils.TriangleType.ISOSCELES);
-		assertEquals(Utils.determineTriangle(2, 1, 2), Utils.TriangleType.ISOSCELES);
-		assertEquals(Utils.determineTriangle(2, 2, 1), Utils.TriangleType.ISOSCELES);
+		try {
+			assertEquals(Utils.determineTriangle(BD_ONE, BD_TWO, BD_TWO), Utils.TriangleType.ISOSCELES);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+
+		try {
+			assertEquals(Utils.determineTriangle(BD_TWO, BD_ONE, BD_TWO), Utils.TriangleType.ISOSCELES);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		try {
+			assertEquals(Utils.determineTriangle(BD_TWO, BD_TWO, BD_ONE), Utils.TriangleType.ISOSCELES);
+		} catch (InvalidInputException e) {
+			fail();
+		}
 		
 		// scalene test.
-		assertEquals(Utils.determineTriangle(2, 3, 4), Utils.TriangleType.SCALENE);
-		assertEquals(Utils.determineTriangle(2, 4, 3), Utils.TriangleType.SCALENE);
-		assertEquals(Utils.determineTriangle(3, 2, 4), Utils.TriangleType.SCALENE);
-		assertEquals(Utils.determineTriangle(3, 4, 2), Utils.TriangleType.SCALENE);
-		assertEquals(Utils.determineTriangle(4, 3, 2), Utils.TriangleType.SCALENE);
-		assertEquals(Utils.determineTriangle(4, 2, 3), Utils.TriangleType.SCALENE);
+		try {
+			assertEquals(Utils.determineTriangle(BD_TWO, BD_THREE, BD_FOUR), Utils.TriangleType.SCALENE);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		try {
+			assertEquals(Utils.determineTriangle(BD_TWO, BD_FOUR, BD_THREE), Utils.TriangleType.SCALENE);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		try {
+			assertEquals(Utils.determineTriangle(BD_THREE, BD_TWO, BD_FOUR), Utils.TriangleType.SCALENE);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		try {
+			assertEquals(Utils.determineTriangle(BD_THREE, BD_FOUR, BD_TWO), Utils.TriangleType.SCALENE);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		try {
+			assertEquals(Utils.determineTriangle(BD_FOUR, BD_THREE, BD_TWO), Utils.TriangleType.SCALENE);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		try {
+			assertEquals(Utils.determineTriangle(BD_FOUR, BD_TWO, BD_THREE), Utils.TriangleType.SCALENE);
+		} catch (InvalidInputException e) {
+			fail();
+		}
 
 		// invalid triangle test.
-		assertEquals(Utils.determineTriangle(1, 3, 5), Utils.TriangleType.INVALID);
-		assertEquals(Utils.determineTriangle(1, 5, 3), Utils.TriangleType.INVALID);
-		assertEquals(Utils.determineTriangle(3, 1, 5), Utils.TriangleType.INVALID);
-		assertEquals(Utils.determineTriangle(3, 5, 1), Utils.TriangleType.INVALID);
-		assertEquals(Utils.determineTriangle(5, 1, 3), Utils.TriangleType.INVALID);
-		assertEquals(Utils.determineTriangle(5, 3, 1), Utils.TriangleType.INVALID);
+		try {
+			assertEquals(Utils.determineTriangle(BD_ONE, BD_THREE, BD_FIVE), Utils.TriangleType.INVALID);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		try {
+			assertEquals(Utils.determineTriangle(BD_ONE, BD_FIVE, BD_THREE), Utils.TriangleType.INVALID);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		try {
+			assertEquals(Utils.determineTriangle(BD_THREE, BD_ONE, BD_FIVE), Utils.TriangleType.INVALID);
+		} catch (InvalidInputException e1) {
+			fail();
+		}
+		try {
+			assertEquals(Utils.determineTriangle(BD_THREE, BD_FIVE, BD_ONE), Utils.TriangleType.INVALID);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		try {
+			assertEquals(Utils.determineTriangle(BD_FIVE, BD_ONE, BD_THREE), Utils.TriangleType.INVALID);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		try {
+			assertEquals(Utils.determineTriangle(BD_FIVE, BD_THREE, BD_ONE), Utils.TriangleType.INVALID);
+		} catch (InvalidInputException e) {
+			fail();
+		}
 	}
 }

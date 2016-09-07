@@ -1,9 +1,15 @@
 package io.ruiyang;
 
+import io.ruiyang.exception.IncorrectNumberOfInputException;
+import io.ruiyang.exception.InvalidInputException;
+import io.ruiyang.exception.InvalidValueException;
+
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 // utility functions wrapper.
 public class Utils{
+	private static final BigDecimal BD_ZERO = new BigDecimal("0");
 	
 	// type of triangle with its side included in a set T(a, b, c)
 	public enum TriangleType{
@@ -18,23 +24,25 @@ public class Utils{
 	 * It is the developer's responsibility to make sure the precision of values passed in.
 	 * @param abc an array contains three sides.
 	 * @return the type of triangle can be formed.
+	 * @throws IncorrectNumberOfInputException
+	 * @throws InvalidValueException
 	 */
-	public static TriangleType determineTriangle(double[] abc){
+	public static TriangleType determineTriangle(BigDecimal[] abc) throws InvalidInputException{
 		if(abc == null || abc.length != 3){
-			return TriangleType.INVALID;
+			throw new IncorrectNumberOfInputException();
 		}
 		
 		// none of sides should be less or equal to 0
 		for(int i = 0; i < abc.length; i++){
-			if(abc[i] <= 0){
-				return TriangleType.INVALID;
+			if(abc[i].compareTo( BD_ZERO ) <= 0){
+				throw new InvalidValueException("Expecting positive value at " + (i+1) + " side.");
 			}
 		}
 		
 		Arrays.sort(abc); // sort array in ascending order.
 		
 		// the sum of two shortest sides should be bigger than the biggest side.
-		if( abc[1] <= abc[2] - abc[0] ){
+		if( abc[1].compareTo( abc[2].subtract( abc[0] )) <= 0 ){
 			return TriangleType.INVALID;
 		}
 		
@@ -54,8 +62,9 @@ public class Utils{
 	 * @param b 2nd side.
 	 * @param c 3rd side.
 	 * @return the type of triangle can be formed.
+	 * @throws InvalidInputException 
 	 */
-	public static TriangleType determineTriangle(double a, double b, double c){
-		return determineTriangle(new double[]{a, b, c});
+	public static TriangleType determineTriangle(BigDecimal a, BigDecimal b, BigDecimal c) throws InvalidInputException{
+		return determineTriangle(new BigDecimal[]{a, b, c});
 	}
 }
